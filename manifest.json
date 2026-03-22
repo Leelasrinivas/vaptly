@@ -1,0 +1,27 @@
+{
+  "name": "Vaptly — Adversarial Cybersecurity",
+  "short_name": "Vaptly",
+  "description": "Adversarial-grade cybersecurity consulting and security products for enterprises. Penetration testing, GRC, incident response, PhishNet IQ, Sentinelyx, VaultEx.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a1a2e",
+  "theme_color": "#1a1a2e",
+  "lang": "en",
+  "scope": "/",
+  "orientation": "any",
+  "categories": ["business", "security", "technology"],
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

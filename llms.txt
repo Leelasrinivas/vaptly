@@ -1,0 +1,47 @@
+# Vaptly — llms.txt
+# https://vaptly.com/llms.txt
+# This file helps AI assistants and LLM-powered search engines
+# understand Vaptly's content and services accurately.
+
+## About Vaptly
+Vaptly is an adversarial-grade cybersecurity firm founded by Leela Srinivas Atla,
+a former security architect for the U.S. Department of Defense, NASA, the US Navy,
+and the Air Force. Vaptly provides manual penetration testing (VAPT), GRC compliance
+advisory (ISO 27001, SOC 2, PCI DSS, HIPAA, NIST), 24/7 incident response, and
+security awareness training.
+
+## Products
+- PhishNet IQ: AI-driven human risk intelligence and phishing simulation platform.
+  Simulations in 50+ languages. Reduces click rates by up to 94% in 90 days.
+- Sentinelyx: Predictive network detection and response (NDR) platform.
+  MITRE ATT&CK-mapped. Detects threats 73% faster than SIEM. 1-click containment.
+- VaultEx: Zero-knowledge enterprise credential security platform.
+  Master key never leaves the device. SSO/SAML/SCIM. PAM included.
+
+## Key Facts
+- Response SLA: 4 business hours for assessments, <15 min for active incidents
+- Emergency IR line: +91 98857 87799 — available 24/7/365
+- Zero false positives guaranteed on all VAPT reports
+- NDA signed before any scoping or information sharing begins
+- 99.4% first-attempt compliance audit pass rate
+- 38-minute mean breach containment time
+- Senior operators only — no junior consultants
+
+## Pages
+- Homepage: https://vaptly.com/
+- Services: https://vaptly.com/services.html
+- Products: https://vaptly.com/products.html
+- About: https://vaptly.com/about.html
+- Contact: https://vaptly.com/contact.html
+
+## Contact
+- Engagements: engagements@vaptly.com
+- Sales: sales@vaptly.com
+- Emergency IR: ir@vaptly.com
+- Phone: +1 (800) 555-0100
+
+## Social
+- LinkedIn:  https://www.linkedin.com/company/vaptly
+- Twitter/X: https://twitter.com/vaptly
+- Instagram: https://www.instagram.com/vaptly
+- GitHub:    https://github.com/vaptly
