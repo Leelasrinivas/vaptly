@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-HWB7MET0CW"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-HWB7MET0CW');
-</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HWB7MET0CW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HWB7MET0CW');
+  </script>
 
   <!-- ═══ PRIMARY SEO ═══ -->
   <title>Vaptly | #1 Cybersecurity Company — Penetration Testing, VAPT, GRC & Incident Response</title>
@@ -33,36 +33,43 @@
   <meta name="target" content="all" />
   <link rel="canonical" href="https://vaptly.com/" />
 
+  <!-- ═══ HREFLANG (FIX: replaces og:locale:alternate — proper implementation) ═══ -->
+  <link rel="alternate" hreflang="en-us" href="https://vaptly.com/" />
+  <link rel="alternate" hreflang="en-gb" href="https://vaptly.com/" />
+  <link rel="alternate" hreflang="x-default" href="https://vaptly.com/" />
+
+  <!-- ═══ SITEMAP (FIX: added — helps Google discover all pages) ═══ -->
+  <link rel="sitemap" type="application/xml" href="https://vaptly.com/sitemap.xml" />
+
   <!-- ═══ OPEN GRAPH ═══ -->
-  <meta property="og:type"               content="website" />
-  <meta property="og:url"                content="https://vaptly.com/" />
-  <meta property="og:title"              content="Vaptly | #1 Cybersecurity Company — Penetration Testing, VAPT, GRC & Incident Response" />
-  <meta property="og:description"        content="World-class adversarial cybersecurity. Manual VAPT, ISO 27001, SOC 2, PCI DSS, 24/7 incident response, red team operations. Founded by a former DoD, NASA & US Navy security architect. Zero false positives guaranteed." />
-  <meta property="og:image"              content="https://vaptly.com/assets/og-cover.png" />
-  <meta property="og:image:width"        content="1200" />
-  <meta property="og:image:height"       content="630" />
-  <meta property="og:image:alt"          content="Vaptly — Adversarial Cybersecurity for Enterprise" />
-  <meta property="og:image:type"         content="image/png" />
-  <meta property="og:site_name"          content="Vaptly" />
-  <meta property="og:locale"             content="en_US" />
-  <meta property="og:locale:alternate"   content="en_GB" />
+  <meta property="og:type"             content="website" />
+  <meta property="og:url"              content="https://vaptly.com/" />
+  <meta property="og:title"            content="Vaptly | #1 Cybersecurity Company — Penetration Testing, VAPT, GRC & Incident Response" />
+  <meta property="og:description"      content="World-class adversarial cybersecurity. Manual VAPT, ISO 27001, SOC 2, PCI DSS, 24/7 incident response, red team operations. Founded by a former DoD, NASA & US Navy security architect. Zero false positives guaranteed." />
+  <meta property="og:image"            content="https://vaptly.com/assets/og-cover.png" />
+  <meta property="og:image:width"      content="1200" />
+  <meta property="og:image:height"     content="630" />
+  <meta property="og:image:alt"        content="Vaptly — Adversarial Cybersecurity for Enterprise" />
+  <meta property="og:image:type"       content="image/png" />
+  <meta property="og:site_name"        content="Vaptly" />
+  <meta property="og:locale"           content="en_US" />
 
   <!-- ═══ TWITTER CARD ═══ -->
-  <meta name="twitter:card"              content="summary_large_image" />
-  <meta name="twitter:site"              content="@vaptly" />
-  <meta name="twitter:creator"           content="@vaptly" />
-  <meta name="twitter:title"             content="Vaptly | #1 Cybersecurity Company — VAPT, GRC & Incident Response" />
-  <meta name="twitter:description"       content="Manual penetration testing, ISO 27001, SOC 2, 24/7 IR & red team ops. Founded by a former DoD, NASA & US Navy security architect. Zero false positives. 38-min containment." />
-  <meta name="twitter:image"             content="https://vaptly.com/assets/og-cover.png" />
-  <meta name="twitter:image:alt"         content="Vaptly — Adversarial Cybersecurity" />
-  <meta name="twitter:label1"            content="Response Time" />
-  <meta name="twitter:data1"             content="38-min breach containment" />
-  <meta name="twitter:label2"            content="False Positives" />
-  <meta name="twitter:data2"             content="Zero — guaranteed" />
+  <meta name="twitter:card"            content="summary_large_image" />
+  <meta name="twitter:site"            content="@vaptly" />
+  <meta name="twitter:creator"         content="@vaptly" />
+  <meta name="twitter:title"           content="Vaptly | #1 Cybersecurity Company — VAPT, GRC & Incident Response" />
+  <meta name="twitter:description"     content="Manual penetration testing, ISO 27001, SOC 2, 24/7 IR & red team ops. Founded by a former DoD, NASA & US Navy security architect. Zero false positives. 38-min containment." />
+  <meta name="twitter:image"           content="https://vaptly.com/assets/og-cover.png" />
+  <meta name="twitter:image:alt"       content="Vaptly — Adversarial Cybersecurity" />
+  <meta name="twitter:label1"          content="Response Time" />
+  <meta name="twitter:data1"           content="38-min breach containment" />
+  <meta name="twitter:label2"          content="False Positives" />
+  <meta name="twitter:data2"           content="Zero — guaranteed" />
 
   <!-- ═══ FAVICON SET ═══ -->
+  <!-- FIX: Removed corrupt base64 PNG favicon. SVG favicon is sufficient for all modern browsers. -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231a1a2e'/%3E%3Cpath d='M8 9l8 14 8-14' stroke='%23c8102e' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E" />
-  <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgo=" />
   <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%231a1a2e'/%3E%3Cpath d='M45 52l45 76 45-76' stroke='%23c8102e' stroke-width='14' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E" />
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#1a1a2e" />
@@ -75,9 +82,9 @@
   <meta name="application-name" content="Vaptly" />
 
   <!-- ═══ PERFORMANCE HINTS ═══ -->
+  <!-- FIX: Removed preconnect to upload.wikimedia.org — images are lazy-loaded, preconnect wastes a slot -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preconnect" href="https://upload.wikimedia.org" crossorigin />
   <link rel="dns-prefetch" href="https://media.licdn.com" />
   <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
   <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
@@ -140,8 +147,7 @@
           {
             "@type": "ContactPoint",
             "contactType": "emergency",
-            "telephone": "+1-800-555-1234",
-            "contactOption": "TollFree",
+            "email": "ir@vaptly.com",
             "availableLanguage": ["English"],
             "hoursAvailable": {
               "@type": "OpeningHoursSpecification",
@@ -230,10 +236,10 @@
               "@type": "Offer",
               "itemOffered": {
                 "@type": "SoftwareApplication",
-                "name": "PhishNet IQ",
+                "name": "Vaptly Sentinel",
                 "applicationCategory": "SecurityApplication",
                 "description": "AI-driven human risk intelligence platform. Phishing simulations in 50+ languages, per-user risk scoring, adaptive micro-training, and dark web monitoring.",
-                "url": "https://vaptly.com/products.html#phishnet",
+                "url": "https://vaptly.com/products.html#sentinel",
                 "provider": { "@id": "https://vaptly.com/#org" }
               }
             },
@@ -241,10 +247,10 @@
               "@type": "Offer",
               "itemOffered": {
                 "@type": "SoftwareApplication",
-                "name": "Sentinelyx",
+                "name": "Vaptly Shield",
                 "applicationCategory": "SecurityApplication",
                 "description": "Predictive network detection and response platform. MITRE ATT&CK-mapped threat intelligence, lateral movement detection, and 1-click incident response.",
-                "url": "https://vaptly.com/products.html#sentinelyx",
+                "url": "https://vaptly.com/products.html#shield",
                 "provider": { "@id": "https://vaptly.com/#org" }
               }
             },
@@ -252,10 +258,10 @@
               "@type": "Offer",
               "itemOffered": {
                 "@type": "SoftwareApplication",
-                "name": "VaultEx",
+                "name": "Vaptly Pulse",
                 "applicationCategory": "SecurityApplication",
                 "description": "Zero-knowledge credential security platform. Enterprise password management with zero-knowledge architecture — master key never leaves your device.",
-                "url": "https://vaptly.com/products.html#vaultex",
+                "url": "https://vaptly.com/products.html#pulse",
                 "provider": { "@id": "https://vaptly.com/#org" }
               }
             }
@@ -289,7 +295,7 @@
         "description": "Vaptly delivers adversarial-grade VAPT, GRC compliance, incident response, and security training. Founded by a former DoD, NASA & US Navy security architect.",
         "inLanguage": "en-US",
         "datePublished": "2024-01-01",
-        "dateModified": "2026-03-22",
+        "dateModified": "2026-03-24",
         "breadcrumb": {
           "@type": "BreadcrumbList",
           "itemListElement": [
@@ -350,7 +356,7 @@
             "name": "Does Vaptly offer 24/7 incident response?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes. Vaptly's incident response team is available 24/7/365. Our emergency line (+1 800-555-1234) and IR email (ir@vaptly.com) are monitored around the clock. Mean breach containment time is 38 minutes."
+              "text": "Yes. Vaptly's incident response team is available 24/7/365. Our IR email (ir@vaptly.com) is monitored around the clock. Mean breach containment time is 38 minutes."
             }
           }
         ]
@@ -363,24 +369,14 @@
         "image": "https://vaptly.com/assets/og-cover.png",
         "description": "Adversarial-grade cybersecurity services — manual VAPT, GRC compliance, incident response, and enterprise security products.",
         "priceRange": "$$$$",
-        "telephone": "+1-800-555-0100",
         "email": "engagements@vaptly.com",
         "areaServed": "Worldwide",
-        "openingHours": "Mo-Fr 09:00-18:00",
-        "aggregateRating": {
-          "@type": "AggregateRating",
-          "ratingValue": "5.0",
-          "reviewCount": "47",
-          "bestRating": "5",
-          "worstRating": "1"
-        }
+        "openingHours": "Mo-Fr 09:00-18:00"
       }
     ]
   }
   </script>
 </head>
-
-
 <body>
 
   <!-- Skip to main -->
@@ -591,8 +587,9 @@
             <span>US Air Force</span>
           </div>
           <span class="ticker-sep" aria-hidden="true">·</span>
+          <!-- FIX: Replaced Pinterest NASA image with stable Wikimedia URL -->
           <div class="ticker-logo-item">
-            <img src="https://i.pinimg.com/474x/bd/1b/db/bd1bdba6a437f185afe3586f1dbd8aea.jpg" alt="NASA" loading="lazy" width="44" height="44" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/NASA_logo.svg" alt="NASA" loading="lazy" width="44" height="44" />
             <span>NASA</span>
           </div>
           <span class="ticker-sep" aria-hidden="true">·</span>
@@ -633,8 +630,9 @@
             <span>US Air Force</span>
           </div>
           <span class="ticker-sep" aria-hidden="true">·</span>
+          <!-- FIX: Replaced Pinterest NASA image with stable Wikimedia URL -->
           <div class="ticker-logo-item">
-            <img src="https://i.pinimg.com/474x/bd/1b/db/bd1bdba6a437f185afe3586f1dbd8aea.jpg" alt="NASA" loading="lazy" width="44" height="44" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/NASA_logo.svg" alt="NASA" loading="lazy" width="44" height="44" />
             <span>NASA</span>
           </div>
           <span class="ticker-sep" aria-hidden="true">·</span>
@@ -886,7 +884,6 @@
                 loading="lazy"
                 decoding="async"
               />
-              <!-- Credential badge overlaid on photo -->
               <div class="founder-photo-badge" aria-hidden="true">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
                 DoD · NASA · Navy · Air Force
@@ -910,8 +907,9 @@
                 <img src="https://upload.wikimedia.org/wikipedia/commons/4/43/Seal_of_the_United_States_Department_of_Defense_%282001%E2%80%932022%29.png" alt="US Department of Defense" width="40" height="40" loading="lazy" />
                 <span>DoD</span>
               </div>
+              <!-- FIX: Replaced Pinterest NASA image with stable Wikimedia URL -->
               <div class="founder-affil-item">
-                <img src="https://i.pinimg.com/474x/bd/1b/db/bd1bdba6a437f185afe3586f1dbd8aea.jpg" alt="NASA" width="40" height="40" loading="lazy" />
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/NASA_logo.svg" alt="NASA" width="40" height="40" loading="lazy" />
                 <span>NASA</span>
               </div>
               <div class="founder-affil-item">
@@ -1117,39 +1115,38 @@
             </p>
             <div class="footer-social" role="list" aria-label="Social media links">
 
-  <!-- LinkedIn -->
-  <a href="https://www.linkedin.com/company/vaptly" class="footer-social-link" aria-label="Vaptly on LinkedIn" role="listitem" target="_blank" rel="noopener noreferrer">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
-      <circle cx="4" cy="4" r="2"/>
-    </svg>
-  </a>
+              <!-- LinkedIn -->
+              <a href="https://www.linkedin.com/company/vaptly" class="footer-social-link" aria-label="Vaptly on LinkedIn" role="listitem" target="_blank" rel="noopener noreferrer">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
+                  <circle cx="4" cy="4" r="2"/>
+                </svg>
+              </a>
 
-  <!-- X / Twitter -->
-  <a href="https://twitter.com/vaptly" class="footer-social-link" aria-label="Vaptly on X / Twitter" role="listitem" target="_blank" rel="noopener noreferrer">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-    </svg>
-  </a>
+              <!-- X / Twitter -->
+              <a href="https://twitter.com/vaptly" class="footer-social-link" aria-label="Vaptly on X / Twitter" role="listitem" target="_blank" rel="noopener noreferrer">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+              </a>
 
-  <!-- Instagram -->
-  <a href="https://www.instagram.com/vaptly" class="footer-social-link" aria-label="Vaptly on Instagram" role="listitem" target="_blank" rel="noopener noreferrer">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-      <circle cx="12" cy="12" r="4"/>
-      <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
-    </svg>
-  </a>
+              <!-- Instagram -->
+              <a href="https://www.instagram.com/vaptly" class="footer-social-link" aria-label="Vaptly on Instagram" role="listitem" target="_blank" rel="noopener noreferrer">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                  <circle cx="12" cy="12" r="4"/>
+                  <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+                </svg>
+              </a>
 
-  <!-- GitHub -->
-  <a href="https://github.com/vaptly" class="footer-social-link" aria-label="Vaptly on GitHub" role="listitem" target="_blank" rel="noopener noreferrer">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844a9.59 9.59 0 012.504.338c1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.2 22 16.447 22 12.021 22 6.484 17.522 2 12 2z"/>
-    </svg>
-  </a>
+              <!-- GitHub -->
+              <a href="https://github.com/vaptly" class="footer-social-link" aria-label="Vaptly on GitHub" role="listitem" target="_blank" rel="noopener noreferrer">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844a9.59 9.59 0 012.504.338c1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.2 22 16.447 22 12.021 22 6.484 17.522 2 12 2z"/>
+                </svg>
+              </a>
 
-</div>
-
+            </div>
           </div>
 
           <!-- Services -->
@@ -1193,10 +1190,11 @@
           <p class="footer-copy">
             &copy; <span id="footerYear">2026</span> Vaptly. All rights reserved.
           </p>
+          <!-- FIX: Replaced dead href="#" links with real page paths -->
           <div class="footer-bottom-right">
-            <a href="#" class="footer-link-inline">Privacy Policy</a>
+            <a href="privacy.html" class="footer-link-inline">Privacy Policy</a>
             <span aria-hidden="true" style="color:rgba(255,255,255,0.1);">·</span>
-            <a href="#" class="footer-link-inline">Terms of Service</a>
+            <a href="terms.html" class="footer-link-inline">Terms of Service</a>
           </div>
         </div>
       </div>
@@ -1209,5 +1207,6 @@
   </button>
 
   <script src="main.js"></script>
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"201ed883d34143609fc5ac0280cf1810","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
