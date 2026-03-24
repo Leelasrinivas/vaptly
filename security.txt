@@ -1,11 +1,5 @@
-# Vaptly — Security Policy
-# https://vaptly.com/.well-known/security.txt
-
 Contact: mailto:security@vaptly.com
-Contact: tel:+18005551234
-Expires: 2027-03-22T00:00:00.000Z
-Encryption: https://vaptly.com/pgp-key.txt
-Acknowledgments: https://vaptly.com/hall-of-fame.html
+Expires: 2027-03-24T00:00:00.000Z
 Preferred-Languages: en
 Canonical: https://vaptly.com/.well-known/security.txt
 Policy: https://vaptly.com/responsible-disclosure.html
