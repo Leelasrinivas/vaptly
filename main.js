@@ -839,9 +839,15 @@ function initGlobe() {
 
   function resize() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    W = canvas.offsetWidth;
-    H = canvas.offsetHeight;
+
+    // FIX: Use hero section dimensions as fallback —
+    // canvas.offsetWidth is 0 on mobile before layout settles
+    const hero = canvas.closest('.hero') || canvas.parentElement?.parentElement;
+    W = canvas.offsetWidth  || hero?.offsetWidth  || window.innerWidth;
+    H = canvas.offsetHeight || hero?.offsetHeight || window.innerHeight;
+
     if (W === 0 || H === 0) return;
+
     canvas.width  = W * dpr;
     canvas.height = H * dpr;
     ctx.scale(dpr, dpr);
@@ -959,12 +965,31 @@ function initGlobe() {
     animId  = requestAnimationFrame(draw);
   }
 
-  // Init
-  resize();
-  if (!reducedMotion()) draw();
+  // FIX: Double RAF ensures DOM dimensions are real on mobile before drawing
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      resize();
+      if (!reducedMotion()) {
+        animId = requestAnimationFrame(draw);
+      }
+    });
+  });
 
-  // Resize handler
-  window.addEventListener('resize', debounce(() => resize(), 200), { passive: true });
+  // FIX: Restart draw loop after resize, not just resize canvas
+  window.addEventListener('resize', debounce(() => {
+    cancelAnimationFrame(animId);
+    resize();
+    if (!reducedMotion()) animId = requestAnimationFrame(draw);
+  }, 200), { passive: true });
+
+  // FIX: Handle mobile orientation change (portrait ↔ landscape)
+  window.addEventListener('orientationchange', () => {
+    setTimeout(() => {
+      cancelAnimationFrame(animId);
+      resize();
+      if (!reducedMotion()) animId = requestAnimationFrame(draw);
+    }, 300);
+  });
 
   // Pause when tab is hidden to save battery
   document.addEventListener('visibilitychange', () => {
@@ -975,6 +1000,7 @@ function initGlobe() {
     }
   });
 }
+
 
 
 /* ============================================================
