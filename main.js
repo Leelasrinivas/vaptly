@@ -815,174 +815,275 @@ function initGlobe() {
   const ctx = canvas.getContext('2d');
   let W, H, cx, cy, radius, animId;
 
-  const DOTS      = 320;
-  const DOT_R     = 1.4;
-  const LINES     = 28;
-  const ROT_SPEED = reducedMotion() ? 0 : 0.0013;
-
+  const ROT_SPEED = reducedMotion() ? 0 : 0.0012;
   let angle = 0;
 
-  // Distribute dots using golden-angle spiral for uniform coverage
+  /* --- Dot distribution (golden spiral) --- */
+  const DOTS = 420;
   const dots = Array.from({ length: DOTS }, (_, i) => {
     const theta = Math.acos(1 - (2 * (i + 0.5)) / DOTS);
     const phi   = Math.PI * (1 + Math.sqrt(5)) * i;
     return { theta, phi };
   });
 
-  const connections = Array.from({ length: LINES }, () => ({
-    a:        Math.floor(Math.random() * DOTS),
-    b:        Math.floor(Math.random() * DOTS),
-    progress: Math.random(),
-    speed:    0.004 + Math.random() * 0.006,
-    active:   Math.random() > 0.35,
+  /* --- Named threat nodes --- */
+  const NODES = [
+    { lat:  40.7, lng: -74.0, hot: true  },   // New York
+    { lat:  51.5, lng:  -0.1, hot: false },   // London
+    { lat:  35.7, lng: 139.7, hot: true  },   // Tokyo
+    { lat:   1.4, lng: 103.8, hot: false },   // Singapore
+    { lat:  55.8, lng:  37.6, hot: true  },   // Moscow
+    { lat:  48.9, lng:   2.3, hot: false },   // Paris
+    { lat:  31.2, lng: 121.5, hot: true  },   // Shanghai
+    { lat:  17.4, lng:  78.5, hot: false },   // Hyderabad
+    { lat:  25.2, lng:  55.3, hot: false },   // Dubai
+    { lat: -33.9, lng:  18.4, hot: false },   // Cape Town
+    { lat:  37.8, lng:-122.4, hot: false },   // San Francisco
+    { lat: -23.5, lng: -46.6, hot: false },   // São Paulo
+  ];
+
+  /* --- Arc connections between nodes --- */
+  const ARCS = [
+    [0,2],[0,3],[2,7],[4,1],[5,1],[6,7],[6,3],[10,3],[7,8],[0,10],[1,9]
+  ];
+  const arcState = ARCS.map(() => ({
+    t: Math.random(),
+    speed: 0.0025 + Math.random() * 0.003,
   }));
 
-  function resize() {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-    // FIX: Use hero section dimensions as fallback —
-    // canvas.offsetWidth is 0 on mobile before layout settles
-    const hero = canvas.closest('.hero') || canvas.parentElement?.parentElement;
-    W = canvas.offsetWidth  || hero?.offsetWidth  || window.innerWidth;
-    H = canvas.offsetHeight || hero?.offsetHeight || window.innerHeight;
-
-    if (W === 0 || H === 0) return;
-
-    canvas.width  = W * dpr;
-    canvas.height = H * dpr;
-    ctx.scale(dpr, dpr);
-    cx     = W / 2;
-    cy     = H / 2;
-    radius = Math.min(W, H) * 0.38;
-  }
-
-  function project(theta, phi) {
-    const sinT = Math.sin(theta);
-    const x    = sinT * Math.cos(phi + angle);
-    const y    = Math.cos(theta);
-    const z    = sinT * Math.sin(phi + angle);
-    const s    = (z + 2) / 3;
+  function latLng3D(lat, lng) {
+    const phi   = (90 - lat)  * Math.PI / 180;
+    const theta = (lng + 180) * Math.PI / 180;
     return {
-      x:       cx + x * radius,
-      y:       cy - y * radius,
-      z,
-      scale:   s,
-      visible: z > -0.25,
+      x: -Math.sin(phi) * Math.cos(theta),
+      y:  Math.cos(phi),
+      z:  Math.sin(phi) * Math.sin(theta),
     };
   }
 
-  function drawGrid() {
-    ctx.strokeStyle = 'rgba(255,255,255,0.04)';
-    ctx.lineWidth   = 0.5;
-
-    const GRID = 10;
-
-    // Latitude lines
-    for (let i = 0; i <= GRID; i++) {
-      const theta = (i / GRID) * Math.PI;
-      ctx.beginPath();
-      let lifted = true;
-      for (let j = 0; j <= 64; j++) {
-        const phi = (j / 64) * Math.PI * 2;
-        const p   = project(theta, phi);
-        if (p.visible) {
-          lifted ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y);
-          lifted = false;
-        } else {
-          lifted = true;
-        }
-      }
-      ctx.stroke();
-    }
-
-    // Longitude lines
-    for (let i = 0; i <= GRID * 2; i++) {
-      const phi = (i / (GRID * 2)) * Math.PI * 2;
-      ctx.beginPath();
-      let lifted = true;
-      for (let j = 0; j <= 64; j++) {
-        const theta = (j / 64) * Math.PI;
-        const p     = project(theta, phi);
-        if (p.visible) {
-          lifted ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y);
-          lifted = false;
-        } else {
-          lifted = true;
-        }
-      }
-      ctx.stroke();
-    }
+  function project(px, py, pz) {
+    const cosA = Math.cos(angle), sinA = Math.sin(angle);
+    const rx = px * cosA - pz * sinA;
+    const rz = px * sinA + pz * cosA;
+    // Slight tilt
+    const tilt = 0.22;
+    const cosT = Math.cos(tilt), sinT = Math.sin(tilt);
+    const ry2  =  py * cosT - rz * sinT;
+    const rz2  =  py * sinT + rz * cosT;
+    const persp = 2.6;
+    const scale = persp / (persp + rz2);
+    return {
+      sx:      cx + rx * scale * radius,
+      sy:      cy + ry2 * scale * radius,
+      depth:   rz2,
+      visible: rz2 < 0.15,
+      scale,
+    };
   }
 
-  function drawConnections() {
-    connections.forEach(conn => {
-      if (!conn.active) return;
-
-      const a = project(dots[conn.a].theta, dots[conn.a].phi);
-      const b = project(dots[conn.b].theta, dots[conn.b].phi);
-      if (!a.visible || !b.visible) return;
-
-      conn.progress += conn.speed;
-      if (conn.progress > 1.4) {
-        conn.progress = 0;
-        conn.a = Math.floor(Math.random() * DOTS);
-        conn.b = Math.floor(Math.random() * DOTS);
-      }
-
-      const prog = clamp(conn.progress, 0, 1);
-      const grad = ctx.createLinearGradient(a.x, a.y, b.x, b.y);
-      grad.addColorStop(0,    'rgba(200,16,46,0)');
-      grad.addColorStop(prog, 'rgba(200,16,46,0.52)');
-      grad.addColorStop(1,    'rgba(200,16,46,0)');
-
-      ctx.beginPath();
-      ctx.moveTo(a.x, a.y);
-      ctx.lineTo(b.x, b.y);
-      ctx.strokeStyle = grad;
-      ctx.lineWidth   = 0.85;
-      ctx.stroke();
-    });
+  function projectDot(theta, phi) {
+    const sinT = Math.sin(theta);
+    return project(
+      sinT * Math.cos(phi),
+      Math.cos(theta),
+      sinT * Math.sin(phi)
+    );
   }
 
-  function drawDots() {
-    dots.forEach(dot => {
-      const p = project(dot.theta, dot.phi);
-      if (!p.visible) return;
-      const alpha = 0.12 + p.scale * 0.52;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, DOT_R * p.scale, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,255,255,${alpha})`;
-      ctx.fill();
-    });
+  function resize() {
+    const dpr  = Math.min(window.devicePixelRatio || 1, 2);
+    const hero = canvas.closest('.hero') || canvas.parentElement?.parentElement;
+    W = canvas.offsetWidth  || hero?.offsetWidth  || window.innerWidth;
+    H = canvas.offsetHeight || hero?.offsetHeight || window.innerHeight;
+    if (!W || !H) return;
+    canvas.width  = W * dpr;
+    canvas.height = H * dpr;
+    ctx.scale(dpr, dpr);
+    // Globe sits right-of-center, slightly
+    cx     = W * 0.67;
+    cy     = H * 0.50;
+    radius = Math.min(W, H) * 0.42;
   }
 
   function draw() {
     ctx.clearRect(0, 0, W, H);
-    drawGrid();
-    drawConnections();
-    drawDots();
-    angle  += ROT_SPEED;
-    animId  = requestAnimationFrame(draw);
-  }
 
-  // FIX: Double RAF ensures DOM dimensions are real on mobile before drawing
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      resize();
-      if (!reducedMotion()) {
-        animId = requestAnimationFrame(draw);
+    /* 1 ── Outer atmosphere glow */
+    const atm = ctx.createRadialGradient(cx, cy, radius * 0.85, cx, cy, radius * 1.3);
+    atm.addColorStop(0,   'rgba(200,16,46,0.10)');
+    atm.addColorStop(0.4, 'rgba(200,16,46,0.04)');
+    atm.addColorStop(1,   'transparent');
+    ctx.beginPath();
+    ctx.arc(cx, cy, radius * 1.3, 0, Math.PI * 2);
+    ctx.fillStyle = atm;
+    ctx.fill();
+
+    /* 2 ── Globe sphere */
+    const sphere = ctx.createRadialGradient(
+      cx - radius * 0.28, cy - radius * 0.28, 0,
+      cx, cy, radius
+    );
+    sphere.addColorStop(0,   'rgba(30,30,65,0.65)');
+    sphere.addColorStop(0.6, 'rgba(15,15,38,0.55)');
+    sphere.addColorStop(1,   'rgba(3,7,15,0.35)');
+    ctx.beginPath();
+    ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+    ctx.fillStyle = sphere;
+    ctx.fill();
+
+    /* 3 ── Latitude lines */
+    for (let lat = -75; lat <= 75; lat += 15) {
+      const phi  = (90 - lat) * Math.PI / 180;
+      const sinP = Math.sin(phi);
+      const cosP = Math.cos(phi);
+      const tilt = 0.22;
+      const cosT = Math.cos(tilt);
+      const yOff = cosP * cosT * radius;
+      const r2   = sinP * radius;
+
+      ctx.beginPath();
+      ctx.ellipse(cx, cy + yOff, r2, r2 * Math.cos(tilt), 0, 0, Math.PI * 2);
+      ctx.strokeStyle = lat === 0
+        ? 'rgba(200,16,46,0.12)'
+        : 'rgba(255,255,255,0.055)';
+      ctx.lineWidth = lat === 0 ? 1 : 0.6;
+      ctx.stroke();
+    }
+
+    /* 4 ── Longitude lines */
+    const LONG_STEPS = 18;
+    for (let i = 0; i < LONG_STEPS; i++) {
+      const phi = (i / LONG_STEPS) * Math.PI * 2;
+      ctx.beginPath();
+      let lifted = true;
+      for (let j = 0; j <= 72; j++) {
+        const theta = (j / 72) * Math.PI;
+        const p = projectDot(theta, phi);
+        if (p.visible) {
+          lifted ? ctx.moveTo(p.sx, p.sy) : ctx.lineTo(p.sx, p.sy);
+          lifted = false;
+        } else { lifted = true; }
+      }
+      ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+      ctx.lineWidth = 0.6;
+      ctx.stroke();
+    }
+
+    /* 5 ── Globe rim */
+    ctx.beginPath();
+    ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(200,16,46,0.22)';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    /* 6 ── Surface dots */
+    dots.forEach(dot => {
+      const p = projectDot(dot.theta, dot.phi);
+      if (!p.visible) return;
+      const a = 0.18 + p.scale * 0.55;
+      ctx.beginPath();
+      ctx.arc(p.sx, p.sy, 1.5 * p.scale, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${a})`;
+      ctx.fill();
+    });
+
+    /* 7 ── Arcs with travelling beams */
+    ARCS.forEach(([ai, bi], idx) => {
+      const nA = NODES[ai], nB = NODES[bi];
+      const d3A = latLng3D(nA.lat, nA.lng);
+      const d3B = latLng3D(nB.lat, nB.lng);
+      const pA  = project(d3A.x, d3A.y, d3A.z);
+      const pB  = project(d3B.x, d3B.y, d3B.z);
+      if (!pA.visible || !pB.visible) return;
+
+      // Control point arcs upward
+      const mx  = (pA.sx + pB.sx) / 2;
+      const my  = (pA.sy + pB.sy) / 2 - (Math.hypot(pB.sx - pA.sx, pB.sy - pA.sy) * 0.38);
+
+      // Faint arc path
+      ctx.beginPath();
+      ctx.moveTo(pA.sx, pA.sy);
+      ctx.quadraticCurveTo(mx, my, pB.sx, pB.sy);
+      ctx.strokeStyle = 'rgba(200,16,46,0.14)';
+      ctx.lineWidth = 0.8;
+      ctx.setLineDash([3, 4]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Travelling beam position along bezier
+      const t  = arcState[idx].t;
+      const t1 = 1 - t;
+      const bx = t1 * t1 * pA.sx + 2 * t1 * t * mx  + t * t * pB.sx;
+      const by = t1 * t1 * pA.sy + 2 * t1 * t * my  + t * t * pB.sy;
+
+      ctx.beginPath();
+      ctx.arc(bx, by, 2.8, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,80,100,1)';
+      ctx.shadowBlur  = 12;
+      ctx.shadowColor = 'rgba(200,16,46,1)';
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      arcState[idx].t = (t + arcState[idx].speed) % 1;
+    });
+
+    /* 8 ── Threat nodes */
+    NODES.forEach(node => {
+      const d3 = latLng3D(node.lat, node.lng);
+      const p  = project(d3.x, d3.y, d3.z);
+      if (!p.visible) return;
+
+      const pulse = 0.5 + 0.5 * Math.sin(Date.now() * 0.0025 + node.lat * 0.3);
+
+      if (node.hot) {
+        // Outer pulse ring
+        ctx.beginPath();
+        ctx.arc(p.sx, p.sy, 7 + pulse * 8, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(200,16,46,${0.35 - pulse * 0.28})`;
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
+
+        // Middle ring
+        ctx.beginPath();
+        ctx.arc(p.sx, p.sy, 4, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(255,80,100,0.5)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        // Core
+        ctx.beginPath();
+        ctx.arc(p.sx, p.sy, 3, 0, Math.PI * 2);
+        ctx.fillStyle = '#ff3355';
+        ctx.shadowBlur  = 14;
+        ctx.shadowColor = 'rgba(200,16,46,1)';
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      } else {
+        ctx.beginPath();
+        ctx.arc(p.sx, p.sy, 2.2, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,255,255,0.55)';
+        ctx.shadowBlur  = 6;
+        ctx.shadowColor = 'rgba(255,255,255,0.4)';
+        ctx.fill();
+        ctx.shadowBlur = 0;
       }
     });
-  });
 
-  // FIX: Restart draw loop after resize, not just resize canvas
+    angle += ROT_SPEED;
+    animId = requestAnimationFrame(draw);
+  }
+
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    resize();
+    if (!reducedMotion()) animId = requestAnimationFrame(draw);
+  }));
+
   window.addEventListener('resize', debounce(() => {
     cancelAnimationFrame(animId);
     resize();
     if (!reducedMotion()) animId = requestAnimationFrame(draw);
   }, 200), { passive: true });
 
-  // FIX: Handle mobile orientation change (portrait ↔ landscape)
   window.addEventListener('orientationchange', () => {
     setTimeout(() => {
       cancelAnimationFrame(animId);
@@ -991,7 +1092,6 @@ function initGlobe() {
     }, 300);
   });
 
-  // Pause when tab is hidden to save battery
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
       cancelAnimationFrame(animId);
@@ -1000,8 +1100,6 @@ function initGlobe() {
     }
   });
 }
-
-
 
 /* ============================================================
    18. LAZY IMAGE LOADING — data-src fallback
