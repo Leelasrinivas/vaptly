@@ -26,7 +26,7 @@
       {
         "@type": "ContactPoint",
         "contactType": "customer support",
-        "email": "engagements@vaptly.com",
+        "email": "sales@vaptly.com",
         "availableLanguage": "English"
       },
       {
@@ -75,7 +75,7 @@
     "description": "Adversarial-grade cybersecurity services and enterprise security products for organisations that cannot afford to be wrong.",
     "priceRange": "$$$$",
     "telephone": "+1-800-555-0100",
-    "email": "engagements@vaptly.com",
+    "email": "sales@vaptly.com",
     "openingHours": "Mo-Fr 09:00-18:00",
     "areaServed": {
       "@type": "GeoShape",
